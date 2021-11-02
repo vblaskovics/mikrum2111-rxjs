@@ -12,7 +12,7 @@ export class UserService {
   /** 
    * Usage: 
    * 
-   * let user1:User = new User({name:'Peter', email:'peter@gmail.com'});
+   * let user1:User = new User('Peter', 'peter@gmail.com');
    * this.userService.currentUser.next(user1);
    * 
    * Elsewhere:
