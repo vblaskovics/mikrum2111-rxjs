@@ -1,3 +1,5 @@
+import { uuid } from '../util/uuid';
+
 export class User {
     id: string;
 
@@ -5,6 +7,6 @@ export class User {
         public name: string = "",
         public avatarSrc: string = ""
     ) {
-        this.id = "";
+        this.id = uuid();
     }
 }
