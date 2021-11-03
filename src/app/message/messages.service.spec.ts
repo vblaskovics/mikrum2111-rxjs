@@ -37,12 +37,16 @@ describe('MessagesService', () => {
     messageService.newMessages.subscribe((message:Message) => {
       console.log('newMessages, message.text:', message.text);
     });
+    
+    messageService.addMessage(m1);
+    
     messageService.messages.subscribe((messages:Message[]) => {
       console.log('messages, messages.length:', messages.length);
     })
-
-    messageService.addMessage(m1);
+    
     messageService.addMessage(m2);
+
+
 
     expect(service).toBeTruthy();
   });

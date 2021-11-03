@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { filter, map, scan, shareReplay } from 'rxjs/operators';
+import { filter, map, publish, publishReplay, refCount, scan, shareReplay } from 'rxjs/operators';
 import { Thread } from '../thread/thread.model';
 import { User } from '../user/user.model';
 import { Message } from './message.model';
