@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Message } from '../message/message.model';
 import { MessagesService } from '../message/messages.service';
@@ -15,6 +15,8 @@ export class ThreadService {
   orderedThreads: Observable<Thread[]>;
 
   currentThread: Subject<Thread> = new BehaviorSubject<Thread>(new Thread());
+
+  currentThreadMessages: Observable<Message[]>;
 
   constructor(public messageService: MessagesService) {
     this.threads = messageService.messages.pipe(
@@ -49,6 +51,21 @@ export class ThreadService {
 
     this.currentThread.subscribe(this.messageService.markThreadAsRead);
 
+    this.currentThreadMessages = 
+      combineLatest([this.currentThread, messageService.messages]).pipe(
+        map(([currentThread, messages])=>{
+          if(currentThread && messages.length > 0){
+            return messages
+              .filter((message) => message.thread.id === currentThread.id)
+              .map((message) => {
+                message.isRead = true;
+                return message;
+              })
+          } else {
+            return [];
+          }
+        })
+      )
   }
 
   setCurrentThread(newThread: Thread):void {
