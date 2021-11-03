@@ -15,6 +15,7 @@ export class ChatNavBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.currentUser.subscribe(u => {
+      console.log('nav-bar', u.name);
       this.user = u;
     });
   }
