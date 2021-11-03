@@ -20,9 +20,13 @@ export class ThreadService {
         messages.map((message:Message) => {
           threads[message.thread.id] = 
             threads[message.thread.id] || message.thread; 
+            
+            const messagesThread = threads[message.thread.id];
+            if(!messagesThread.lastMessage || 
+              messagesThread.lastMessage.sentAt < message.sentAt){
+                messagesThread.lastMessage = message;
+            }
         });
-
-        
 
         return threads;
       })
