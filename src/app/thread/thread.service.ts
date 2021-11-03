@@ -47,6 +47,11 @@ export class ThreadService {
       })
     );
 
+    this.currentThread.subscribe(this.messageService.markThreadAsRead);
 
+  }
+
+  setCurrentThread(newThread: Thread):void {
+    this.currentThread.next(newThread);
   }
 }

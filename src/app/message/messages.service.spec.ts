@@ -39,12 +39,12 @@ describe('MessagesService', () => {
     });
     
     messageService.addMessage(m1);
+    messageService.addMessage(m2);
     
     messageService.messages.subscribe((messages:Message[]) => {
       console.log('messages, messages.length:', messages.length);
     })
     
-    messageService.addMessage(m2);
 
 
 

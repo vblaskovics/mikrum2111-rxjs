@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { filter, map, publish, publishReplay, refCount, scan, shareReplay } from 'rxjs/operators';
 import { Thread } from '../thread/thread.model';
 import { User } from '../user/user.model';
@@ -18,19 +18,20 @@ export class MessagesService {
 
   newMessages: Subject<Message> = new Subject<Message>();
 
-  messages: Observable<Message[]>;
+  messages: Subject<Message[]> = new BehaviorSubject<Message[]>([]);
 
   updates: Subject<any> = new Subject<any>();
 
   create: Subject<Message> = new Subject<Message>();
 
+  markThreadAsRead: Subject<any> = new Subject<any>();
+
   constructor() {
-    this.messages = this.updates.pipe(
+    this.updates.pipe(
       scan((messages: Message[], operation: IMessagesOperation) => {
         return operation(messages);
-      }, initialMessages),
-      shareReplay(1)
-    );
+      }, initialMessages)
+    ).subscribe(this.messages);
 
     this.create.pipe(
       map((message: Message): IMessagesOperation => {
@@ -48,6 +49,21 @@ export class MessagesService {
     // this.updates.next( (messages:Message[]): Message[] => {
     //   return messages.concat(myMessage);
     // });
+
+    this.markThreadAsRead.pipe(
+      map((thread: Thread) => {
+        let operator:IMessagesOperation;
+        operator = (messages: Message[]): Message[] => {
+          return messages.map((message:Message)=>{
+            if (message.thread.id === thread.id) {
+              message.isRead = true;
+            }
+            return message;
+          });
+        };
+        return operator;
+      })
+    ).subscribe(this.updates);
 
 
   }
