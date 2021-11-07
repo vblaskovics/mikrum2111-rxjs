@@ -1,3 +1,6 @@
+# Feladatok
+[Itt](./FELADATOK.md) érhetők el feladatok.
+
 # Mikrum2111Rxjs
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.12.
