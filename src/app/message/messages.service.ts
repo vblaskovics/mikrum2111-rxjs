@@ -76,7 +76,7 @@ export class MessagesService {
     return this.newMessages.pipe(
       filter((message: Message) => {
         return message.thread.id === thread.id &&
-          message.author.id === user.id;
+          message.author.id !== user.id;
       })
     );
   }

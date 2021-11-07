@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { timer } from 'rxjs';
+import { ChatExampleData } from './data/chat-example-data';
+import { MessagesService } from './message/messages.service';
+import { ThreadService } from './thread/thread.service';
 import { User } from './user/user.model';
 import { UserService } from './user/user.service';
 
@@ -11,8 +13,9 @@ import { UserService } from './user/user.service';
 export class AppComponent {
   title = 'mikrum2111-rxjs';
 
-  constructor(public userService: UserService) {
-    let user = new User('Peter');
-    this.userService.setCurrentUser(user);
+  constructor(public messagesService: MessagesService,
+    public threadService: ThreadService,
+    public userService: UserService) {
+      ChatExampleData.init(messagesService, threadService, userService);
   }
 }
