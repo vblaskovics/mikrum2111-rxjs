@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Message } from '../message/message.model';
 import { MessagesService } from '../message/messages.service';
 import { ThreadService } from '../thread/thread.service';
 
@@ -10,22 +7,13 @@ import { ThreadService } from '../thread/thread.service';
   templateUrl: './chat-nav-bar.component.html'
 })
 export class ChatNavBarComponent implements OnInit {
-  unreadMessagesCount: Observable<number> = new Observable();
 
   constructor(
     private messagesService:MessagesService, private threadService: ThreadService) {
     }
 
   ngOnInit(): void {
-    this.unreadMessagesCount = combineLatest([
-      this.threadService.currentThread,
-      this.messagesService.messages
-    ]).pipe(
-      map(([currentThread, messages])=>{
-        return messages
-          .filter(m => currentThread.id !== m.thread.id && !m.isRead)
-          .length;
-    }));
+    // TODO megcsinálni az olvasatlan üzenet számlálót!
   }
 
 }

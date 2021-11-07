@@ -178,18 +178,17 @@ export class ChatExampleData {
       );
     });
 
-    // expert bot
+    // TODO expert bot
     messagesService
     .messagesForThreadUser(tExpert, expert)
     .forEach((message:Message) => {
-      messagesService.updates.next((messages:Message[]) => {
-        return messages.map(m => {
-          if (m.thread.name === message.text) {
-            m.isRead = false;
-          }
-          return m;
+      messagesService.addMessage(
+        new Message({
+          author: expert,
+          text: `Itt kellene valami mást csinálni...`,
+          thread: tExpert,
         })
-      });
+      );
     });
 
   }
