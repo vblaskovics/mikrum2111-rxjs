@@ -1,5 +1,8 @@
 # Feladatok
-[Itt](./FELADATOK.md) érhetők el feladatok.
+
+1. Írd meg az olvasatlan üzeneteket számláló komponenst!
+2. Írd meg az expert bot-ot úgy, hogy ha a botnak elküldjük egy másik bot nevét, akkor az adott bothoz tartozó összes üzenetet állítsa be olvasatlanra!
+
 
 # Mikrum2111Rxjs
 

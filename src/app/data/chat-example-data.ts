@@ -32,6 +32,10 @@ const ask: User = new User(
   'Asking Bot',
   'assets/images/avatars/male-avatar-3.png'
 );
+const expert: User = new User(
+  'Expert Bot',
+  'assets/images/avatars/female-avatar-3.png'
+);
 
 const tLadycap: Thread = new Thread(
   'tLadycap',
@@ -42,6 +46,7 @@ const tEcho: Thread = new Thread('tEcho', echo.name, echo.avatarSrc);
 const tRev: Thread = new Thread('tRev', rev.name, rev.avatarSrc);
 const tWait: Thread = new Thread('tWait', wait.name, wait.avatarSrc);
 const tAsk: Thread = new Thread('tAsk', ask.name, ask.avatarSrc);
+const tExpert: Thread = new Thread('tExpert', expert.name, expert.avatarSrc);
 
 const initialMessages: Array<Message> = [
   new Message({
@@ -79,6 +84,12 @@ const initialMessages: Array<Message> = [
     sentAt: moment().subtract(5, 'minutes').toDate(),
     text: `I\'ll ask why.`,
     thread: tAsk,
+  }),
+  new Message({
+    author: expert,
+    sentAt: moment().subtract(6, 'minutes').toDate(),
+    text: `I'm the expert bot!`,
+    thread: tExpert,
   })
 ];
 
@@ -88,8 +99,6 @@ export class ChatExampleData {
     threadService: ThreadService,
     userService: UserService
   ): void {
-    // TODO make `messages` hot
-    messagesService.messages.subscribe(() => ({}));
 
     // set "Juliet" as the current user
     userService.setCurrentUser(me);
@@ -167,6 +176,20 @@ export class ChatExampleData {
           thread: tAsk,
         })
       );
+    });
+
+    // expert bot
+    messagesService
+    .messagesForThreadUser(tExpert, expert)
+    .forEach((message:Message) => {
+      messagesService.updates.next((messages:Message[]) => {
+        return messages.map(m => {
+          if (m.thread.name === message.text) {
+            m.isRead = false;
+          }
+          return m;
+        })
+      });
     });
 
   }
