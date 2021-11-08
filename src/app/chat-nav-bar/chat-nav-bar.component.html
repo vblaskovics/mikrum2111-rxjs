@@ -7,7 +7,7 @@
         </div>
         <p class="navbar-text navbar-right">
             <button class="btn btn-primary" type="button">
-                Messages <span class="badge">???</span>
+                Messages <span class="badge">{{ unreadMessagesCounter | async}}</span>
             </button>
         </p>
     </div>
